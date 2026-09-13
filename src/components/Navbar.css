@@ -7,7 +7,12 @@
   padding: 1.5rem 0;
   transition: padding var(--dur-med) var(--ease-signature),
               background var(--dur-med) var(--ease-signature),
-              box-shadow var(--dur-med) var(--ease-signature);
+              box-shadow var(--dur-med) var(--ease-signature),
+              transform var(--dur-med) var(--ease-signature);
+}
+
+.navbar--hidden {
+  transform: translateY(-100%);
 }
 
 .navbar__inner {
@@ -65,6 +70,7 @@
 .navbar--scrolled {
   padding: 0.85rem 0;
   background: rgba(37, 29, 14, 0.92);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 30px -20px rgba(0, 0, 0, 0.5);
 }

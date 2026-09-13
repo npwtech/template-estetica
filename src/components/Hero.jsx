@@ -15,7 +15,7 @@ export default function Hero() {
       });
 
       tl.set(root.current, { visibility: 'visible' })
-        .from(document.querySelector('.navbar'), { yPercent: -100, duration: 0.7, ease: 'power2.out' }, 0)
+        .from(document.querySelector('.navbar'), { yPercent: -100, duration: 0.7, ease: 'power2.out', clearProps: 'transform' }, 0)
         .from('.hero__media img', { scale: 1.15, duration: 1.8, ease: 'power2.out' }, 0)
         .from('.hero__kicker', { opacity: 0, y: 14, duration: 0.6 }, 0.35)
         .from(
@@ -35,8 +35,8 @@ export default function Hero() {
     <section className="hero" id="topo" ref={root}>
       <div className="hero__media">
         <img
-          src="https://images.pexels.com/photos/10187229/pexels-photo-10187229.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Retrato de perfil com iluminação dourada sobre fundo escuro"
+          src="https://images.pexels.com/photos/7010890/pexels-photo-7010890.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Mulher se cuidando, aplicando produto de skincare no rosto"
         />
         <div className="hero__scrim" aria-hidden="true" />
       </div>
