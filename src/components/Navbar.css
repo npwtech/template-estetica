@@ -1,0 +1,90 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.5rem 0;
+  transition: padding var(--dur-med) var(--ease-signature),
+              background var(--dur-med) var(--ease-signature),
+              box-shadow var(--dur-med) var(--ease-signature);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.navbar__mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  transition: color var(--dur-med) var(--ease-signature);
+}
+
+.navbar__links {
+  display: flex;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  margin-right: auto;
+  margin-left: 3rem;
+}
+
+.navbar__links a {
+  font-size: var(--fs-sm);
+  color: rgba(255, 253, 249, 0.82);
+  position: relative;
+  padding-bottom: 2px;
+  transition: color var(--dur-fast) var(--ease-signature);
+}
+
+.navbar__links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: right var(--dur-med) var(--ease-signature);
+}
+
+.navbar__links a:hover { color: var(--white); }
+.navbar__links a:hover::after { right: 0; }
+
+.navbar__cta {
+  color: var(--white);
+  border-color: rgba(255, 253, 249, 0.4);
+  flex-shrink: 0;
+}
+.navbar__cta:hover { border-color: var(--white); }
+
+.navbar--scrolled {
+  padding: 0.85rem 0;
+  background: rgba(37, 29, 14, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px -20px rgba(0, 0, 0, 0.5);
+}
+
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
+}
+.navbar__toggle span {
+  height: 1px;
+  background: var(--white);
+  width: 100%;
+  transition: transform var(--dur-fast) var(--ease-signature), opacity var(--dur-fast);
+}
+
+@media (max-width: 860px) {
+  .navbar__links { display: none; }
+  .navbar__cta { display: none !important; }
+  .navbar__toggle { display: flex; }
+  .navbar--scrolled { background: var(--ink); }
+}

@@ -1,0 +1,61 @@
+.cta {
+  background: var(--ink);
+  color: var(--text-inverse);
+  text-align: center;
+  overflow: hidden;
+}
+
+.cta__eyebrow {
+  color: var(--accent-on-dark);
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.cta__title {
+  font-size: var(--fs-2xl);
+  color: var(--white);
+}
+
+.cta__title-row {
+  display: block;
+  overflow: hidden;
+}
+.cta__title-line { display: block; }
+
+.cta__foot {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta__foot p {
+  color: var(--text-inverse-muted);
+  font-size: var(--fs-md);
+}
+
+.cta__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta__marquee {
+  margin-top: clamp(3rem, 7vw, 5rem);
+  border-top: 1px solid var(--border-inverse);
+  overflow: hidden;
+}
+
+.cta__marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding: clamp(1.25rem, 3vw, 2rem) 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.5rem);
+  color: var(--brass-light);
+  white-space: nowrap;
+}
