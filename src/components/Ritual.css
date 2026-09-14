@@ -1,0 +1,63 @@
+.ritual { background: var(--bg-alt); }
+
+.ritual__title { margin-top: 1rem; font-size: var(--fs-xl); }
+
+.ritual__row {
+  position: relative;
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.ritual__track {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .ritual__track {
+    display: block;
+    position: absolute;
+    top: -1.75rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .ritual__progress {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--accent-strong);
+    transform-origin: left center;
+    transform: scaleX(0);
+  }
+}
+
+.ritual-step { position: relative; }
+
+.ritual-step__n {
+  display: block;
+  font-size: var(--fs-lg);
+  color: var(--accent-strong);
+  font-style: italic;
+  margin-bottom: 0.85rem;
+}
+
+.ritual-step h3 { font-size: var(--fs-md); }
+
+.ritual-step p {
+  margin-top: 0.65rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  max-width: 30ch;
+}
+
+@media (max-width: 900px) {
+  .ritual__row { grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+}
+
+@media (max-width: 560px) {
+  .ritual__row { grid-template-columns: 1fr; gap: 2.25rem; }
+}

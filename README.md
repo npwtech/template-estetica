@@ -22,8 +22,25 @@ src/
   theme.css              ← toda a paleta e a tipografia do site (ver abaixo)
   App.jsx                ← monta as seções na ordem em que aparecem na página
   components/
-    Navbar, Hero, Services, About, Gallery, Testimonials, CTA, Footer
+    Navbar, Hero, Problem, Services, HowItWorks, About, Gallery,
+    Testimonials, FAQ, CTA, Footer, StickyMobileCTA
     PhotoSlot.jsx         ← todo espaço de foto do site passa por aqui
+```
+
+A ordem das seções segue uma narrativa de conversão, não uma lista solta:
+
+```
+Hero            → o que é, pra quem é, por que vale a pena
+Problem         → "isso é pra mim?" — as dores que levam a agendar
+Services        → a solução, por frente de cuidado
+HowItWorks      → "como funciona?" — o passo a passo até a cadeira
+About           → identidade do estúdio + diferenciais ("por que é melhor?")
+Gallery         → prova visual do ambiente e do trabalho
+Testimonials    → prova social, com avaliação em destaque
+FAQ             → objeções reais respondidas antes de perguntarem
+CTA             → conclusão natural da página, com nova chance de conversão
+Footer          → contato, horários, redes
+StickyMobileCTA → barra fixa só no mobile, some perto da CTA final
 ```
 
 ## Como trocar a paleta de cores

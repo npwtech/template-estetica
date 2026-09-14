@@ -51,17 +51,20 @@ export default function CTA() {
   return (
     <section className="cta section" id="agendar" ref={root}>
       <div className="wrap">
-        <p className="cta__eyebrow eyebrow-label">Studio Estética</p>
+        <p className="cta__eyebrow eyebrow">Comece hoje</p>
         <h2 className="cta__title">
-          <span className="cta__title-row"><span className="cta__title-line">Marque seu horário</span></span>
-          <span className="cta__title-row"><span className="cta__title-line">e sinta a diferença.</span></span>
+          <span className="cta__title-row"><span className="cta__title-line">Sua próxima versão</span></span>
+          <span className="cta__title-row"><span className="cta__title-line">começa numa conversa.</span></span>
         </h2>
         <div className="cta__foot">
-          <p>Atendimento de terça a sábado, das 9h às 19h.</p>
+          <p>Avaliação individual, sem pacote fechado. Terça a sábado, das 9h às 19h.</p>
           <div className="cta__actions">
-            <a href="tel:+5500000000000" className="btn btn-primary">(00) 00000-0000</a>
-            <a href="#" className="btn btn-outline-inverse">Agendar pelo WhatsApp</a>
+            <a href="#" className="btn btn-primary btn-lg">
+              Agendar pelo WhatsApp <span className="btn__arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="tel:+5500000000000" className="btn btn-outline-inverse btn-lg">(00) 00000-0000</a>
           </div>
+          <p className="cta__microcopy">Sem compromisso · sem letra miúda</p>
         </div>
       </div>
 
@@ -69,19 +72,19 @@ export default function CTA() {
         <div className="cta__marquee-track">
           <span>Studio Estética</span>
           <span>✦</span>
-          <span>Marque seu horário</span>
+          <span>Agende sua avaliação</span>
           <span>✦</span>
           <span>Studio Estética</span>
           <span>✦</span>
-          <span>Marque seu horário</span>
+          <span>Agende sua avaliação</span>
           <span>✦</span>
           <span>Studio Estética</span>
           <span>✦</span>
-          <span>Marque seu horário</span>
+          <span>Agende sua avaliação</span>
           <span>✦</span>
           <span>Studio Estética</span>
           <span>✦</span>
-          <span>Marque seu horário</span>
+          <span>Agende sua avaliação</span>
           <span>✦</span>
         </div>
       </div>

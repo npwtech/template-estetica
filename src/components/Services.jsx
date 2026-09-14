@@ -61,7 +61,7 @@ export default function Services() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.services__head > .eyebrow-label', {
+      gsap.from('.services__head > .eyebrow', {
         opacity: 0,
         y: 24,
         duration: 0.7,
@@ -87,17 +87,14 @@ export default function Services() {
   }, []);
 
   return (
-    <section className="services section" id="servicos" ref={root}>
+    <section className="services section" id="cuidado" ref={root}>
       <div className="wrap">
         <div className="services__head">
-          <p className="eyebrow-label">O que fazemos</p>
-          <h2 className="services__title">
-            Quatro frentes de cuidado, uma equipe só.
-          </h2>
+          <p className="eyebrow">O cuidado</p>
+          <h2 className="services__title">Cada frente, um plano diferente.</h2>
           <p className="services__lead">
-            Cada atendimento parte de uma avaliação individual — sem pacotes
-            genéricos, só o que a sua pele, seu cabelo ou seu corpo pedem
-            naquele momento.
+            Quatro áreas, uma só maneira de trabalhar: nada começa sem
+            entender sua pele, seu cabelo ou seu corpo primeiro.
           </p>
         </div>
 
@@ -114,18 +111,23 @@ export default function Services() {
               </div>
               <div className="service-card__body">
                 <div className="service-card__top">
-                  <span className="service-card__n">{s.n}</span>
+                  <span className="service-card__n font-display">{s.n}</span>
                   <h3>{s.title}</h3>
                 </div>
                 <p className="service-card__desc">{s.desc}</p>
-                <ul className="service-card__list">
-                  {s.items.map((it) => (
-                    <li key={it}>{it}</li>
-                  ))}
-                </ul>
+                <p className="service-card__list">
+                  {s.items.join(' · ')}
+                </p>
               </div>
             </article>
           ))}
+        </div>
+
+        <div className="services__foot">
+          <p className="font-display">Não sabe qual frente faz sentido pro seu caso?</p>
+          <a href="#agendar" className="btn-text">
+            A gente descobre junto com você na avaliação <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>

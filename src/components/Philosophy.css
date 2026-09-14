@@ -1,0 +1,52 @@
+.philosophy {
+  background: var(--bg);
+}
+
+.philosophy__wrap {
+  max-width: 880px;
+}
+
+.philosophy__title {
+  margin-top: 1.5rem;
+  font-size: var(--fs-xl);
+  max-width: 18ch;
+}
+
+.philosophy__title em {
+  color: var(--accent-strong);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.philosophy__cols {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding-top: clamp(2rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--border);
+}
+
+.philosophy__col {
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+}
+
+.philosophy__pivot {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: var(--fs-lg);
+  font-style: italic;
+  color: var(--text);
+  max-width: 34ch;
+}
+
+.philosophy__link {
+  margin-top: 2.25rem;
+  display: inline-flex;
+}
+
+@media (max-width: 760px) {
+  .philosophy__title { max-width: none; }
+  .philosophy__cols { grid-template-columns: 1fr; }
+}

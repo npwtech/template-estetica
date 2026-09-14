@@ -34,6 +34,13 @@
   font-size: var(--fs-md);
 }
 
+.cta__microcopy {
+  font-size: var(--fs-xs) !important;
+  color: var(--text-inverse-muted);
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+}
+
 .cta__actions {
   display: flex;
   gap: 1rem;
@@ -56,6 +63,7 @@
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.5rem);
-  color: var(--brass-light);
+  color: var(--clay-light);
+  opacity: 0.9;
   white-space: nowrap;
 }

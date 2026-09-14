@@ -7,11 +7,11 @@
 }
 
 .photo-slot--tone-2 {
-  background: linear-gradient(155deg, #c9b28a, var(--brass) 75%);
+  background: linear-gradient(155deg, #cbb193, var(--clay) 75%);
 }
 
 .photo-slot--tone-3 {
-  background: linear-gradient(155deg, var(--parchment-soft), var(--stone) 130%);
+  background: linear-gradient(155deg, var(--bone-deep), var(--stone) 130%);
 }
 
 .photo-slot img {
@@ -20,16 +20,16 @@
   object-fit: cover;
   /* tratamento único de cor para que fotos de bancos diferentes
      "conversem" entre si dentro da paleta do tema */
-  filter: grayscale(10%) sepia(8%) saturate(1.08) contrast(1.05) brightness(1.02);
+  filter: grayscale(16%) sepia(6%) saturate(1.02) contrast(1.05) brightness(1.01);
 }
 
 .photo-slot--photo::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(37, 29, 14, 0.32), rgba(169, 131, 79, 0.14));
+  background: linear-gradient(160deg, rgba(28, 24, 21, 0.3), rgba(161, 92, 63, 0.12));
   mix-blend-mode: color;
-  opacity: 0.6;
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -41,13 +41,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  color: rgba(242, 238, 227, 0.55);
+  color: rgba(245, 241, 233, 0.55);
   text-align: center;
   padding: 1rem;
 }
 
 .photo-slot--tone-3 .photo-slot__placeholder {
-  color: rgba(37, 29, 14, 0.4);
+  color: rgba(28, 24, 21, 0.4);
 }
 
 .photo-slot__placeholder span {

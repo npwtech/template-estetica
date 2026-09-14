@@ -1,71 +1,76 @@
 /* ==========================================================================
-   TEMA — troque só esse bloco para re-paletar o site inteiro.
-   Todas as cores do projeto vêm destas variáveis. Nada de cor "hardcoded"
-   dentro dos componentes.
+   TEMA — Studio Estética. "Luxo discreto": tons quentes e neutros, um único
+   acento (terracota fosco) usado com moderação, muito espaço em branco.
+   Troque só o bloco de paleta base para re-paletar o site inteiro — o resto
+   do CSS usa apenas os papéis semânticos abaixo.
    ========================================================================== */
 :root {
-  /* --- paleta base (Studio Estética) --- */
-  --ink: #251d0e;          /* dourado-preto profundo — fundo escuro, texto principal */
-  --ink-soft: #3d301a;     /* variação mais clara do ink, para cards no modo escuro */
-  --parchment: #f2eee3;    /* pergaminho — fundo claro principal */
-  --parchment-soft: #e9e2d2; /* variação para seções alternadas */
-  --stone: #a79f8e;        /* texto secundário / bordas sutis */
-  --brass: #a9834f;        /* dourado envelhecido — acento principal */
-  --brass-light: #d8b98a;  /* acento claro, usado em hovers e detalhes finos */
-  --white: #fffdf9;
+  /* --- paleta base --- */
+  --ink: #1c1815;          /* quase-preto quente — fundo escuro, texto principal */
+  --ink-soft: #292320;      /* variação mais clara do ink, para cards no modo escuro */
+  --bone: #f5f1e9;          /* marfim — fundo claro principal */
+  --bone-deep: #ebe3d3;     /* variação para seções alternadas */
+  --stone: #9c9284;         /* texto secundário / bordas sutis, neutro quente */
+  --clay: #a15c3f;          /* terracota fosco — único acento da marca */
+  --clay-deep: #7d4630;     /* terracota escuro — hover / texto sobre claro */
+  --clay-light: #cf9c81;    /* terracota claro — acentos sobre fundo escuro */
+  --white: #fffdfa;
 
   /* --- papéis semânticos (o resto do CSS usa só estes nomes) --- */
-  --bg: var(--parchment);
-  --bg-alt: var(--parchment-soft);
+  --bg: var(--bone);
+  --bg-alt: var(--bone-deep);
   --bg-inverse: var(--ink);
   --surface: var(--white);
   --surface-inverse: var(--ink-soft);
   --text: var(--ink);
-  --text-muted: #5c5548;
-  --text-inverse: var(--parchment);
-  --text-inverse-muted: #b9c2ba;
-  --accent: var(--brass);
-  --accent-strong: #8a6a3d;
-  --accent-on-dark: var(--brass-light);
-  --border: rgba(37, 29, 14, 0.12);
-  --border-inverse: rgba(242, 238, 227, 0.16);
+  --text-muted: #5c5449;
+  --text-inverse: var(--bone);
+  --text-inverse-muted: #b3a99b;
+  --accent: var(--clay);
+  --accent-strong: var(--clay-deep);
+  --accent-on-dark: var(--clay-light);
+  --border: rgba(28, 24, 21, 0.11);
+  --border-inverse: rgba(245, 241, 233, 0.14);
 
-  /* --- tipografia --- */
+  /* --- tipografia ---
+     Fraunces fica reservada a poucos momentos editoriais (headline do hero,
+     citações, numerais grandes). O resto da hierarquia — títulos de seção,
+     navegação, corpo — usa Inter, com peso e tracking fazendo o trabalho de
+     parecer uma marca institucional, não um convite de spa. */
   --font-display: "Fraunces", "Iowan Old Style", serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* escala tipográfica (~1.25 major third), com clamp para fluidez */
+  /* escala tipográfica, com clamp para fluidez */
   --fs-xs: 0.8125rem;
   --fs-sm: 0.9375rem;
   --fs-base: 1rem;
   --fs-md: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
   --fs-lg: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  --fs-xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
-  --fs-2xl: clamp(3rem, 2rem + 4.2vw, 5.5rem);
+  --fs-xl: clamp(2.125rem, 1.6rem + 2.2vw, 3.375rem);
+  --fs-2xl: clamp(2.75rem, 1.8rem + 4.2vw, 5.25rem);
 
   /* --- espaçamento & layout --- */
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --section-pad: clamp(4rem, 8vw, 8rem);
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --content-max: 1320px;
+  --section-pad: clamp(4.5rem, 9vw, 9rem);
+  --section-pad-sm: clamp(2.75rem, 5vw, 4.5rem);
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --content-max: 1360px;
+  --content-narrow: 720px;
+
+  /* --- profundidade: usada com moderação, nunca como "card elevado" --- */
+  --shadow-sm: 0 10px 26px -18px rgba(28, 24, 21, 0.32);
+  --shadow-md: 0 26px 54px -26px rgba(28, 24, 21, 0.38);
 
   /* --- movimento --- */
   --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 0.3s;
-  --dur-med: 0.6s;
-}
-
-@media (prefers-color-scheme: dark) {
-  /* o template é intencionalmente "light" por padrão (papel/estúdio),
-     mas isso fica pronto caso queira oferecer um modo escuro no futuro. */
+  --dur-med: 0.65s;
 }
 
 * { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -85,23 +90,29 @@ body {
   font-size: var(--fs-base);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  line-height: 1.08;
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.12;
   margin: 0;
   color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+/* utilitário para os poucos momentos editoriais em serifa */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
   letter-spacing: -0.01em;
 }
 
 p { margin: 0; }
+ul { margin: 0; }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
 img { max-width: 100%; display: block; }
 
@@ -120,51 +131,106 @@ button {
   padding-right: var(--gutter);
 }
 
-.section {
-  padding-top: var(--section-pad);
-  padding-bottom: var(--section-pad);
+.section { padding-top: var(--section-pad); padding-bottom: var(--section-pad); }
+.section--tight { padding-top: var(--section-pad-sm); padding-bottom: var(--section-pad-sm); }
+
+.section-head { max-width: var(--content-narrow); }
+.section-head--center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
-.eyebrow-label {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--fs-md);
+/* rótulo editorial — versalete discreto, não script de spa */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
   color: var(--accent-strong);
 }
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+}
+.section-head--center .eyebrow { justify-content: center; }
 
+/* --- botões: sem sombra de "card elevado" — a interação é o preenchimento
+   deslizante, não um lift. --- */
 .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.9rem 1.8rem;
+  padding: 0.95rem 1.85rem;
   border-radius: var(--radius-sm);
   font-size: var(--fs-sm);
   font-weight: 500;
-  transition: transform var(--dur-fast) var(--ease-signature),
-              background var(--dur-fast) var(--ease-signature),
-              color var(--dur-fast) var(--ease-signature),
-              border-color var(--dur-fast) var(--ease-signature);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-signature), border-color var(--dur-fast) var(--ease-signature);
 }
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-med) var(--ease-signature);
+}
+.btn:hover::before { transform: scaleX(1); }
+
+.btn__arrow { display: inline-block; transition: transform var(--dur-fast) var(--ease-signature); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+.btn-lg { padding: 1.1rem 2.25rem; font-size: var(--fs-md); }
 
 .btn-primary {
   background: var(--ink);
-  color: var(--parchment);
+  color: var(--bone);
 }
-.btn-primary:hover { background: var(--accent-strong); transform: translateY(-2px); }
+.btn-primary::before { background: var(--accent-strong); }
 
 .btn-outline {
   border: 1px solid var(--border);
   color: var(--text);
 }
-.btn-outline:hover { border-color: var(--text); transform: translateY(-2px); }
+.btn-outline::before { background: var(--ink); }
+.btn-outline:hover { color: var(--bone); border-color: var(--ink); }
 
 .btn-outline-inverse {
   border: 1px solid var(--border-inverse);
   color: var(--text-inverse);
 }
-.btn-outline-inverse:hover { border-color: var(--text-inverse); transform: translateY(-2px); }
+.btn-outline-inverse::before { background: var(--bone); }
+.btn-outline-inverse:hover { color: var(--ink); border-color: var(--bone); }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.btn-text {
+  padding: 0;
+  gap: 0.5rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding-bottom: 3px;
+}
+.btn-text::before { display: none; }
+.btn-text:hover { border-color: var(--text); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* estrelas de avaliação, usadas com moderação */
+.stars { display: inline-flex; gap: 0.2rem; color: var(--accent); }
+.stars svg { width: 14px; height: 14px; }
+
+@media (max-width: 640px) {
+  :root { --section-pad: clamp(3.25rem, 13vw, 5rem); }
 }

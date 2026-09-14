@@ -7,6 +7,13 @@ import './About.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const DIFFERENTIALS = [
+  'Protocolos revisados por dermatologistas parceiros',
+  'Produtos selecionados, sem marca genérica',
+  'Ambiente privativo e climatizado',
+  'Equipe em atualização técnica constante',
+];
+
 export default function About() {
   const root = useRef(null);
 
@@ -22,7 +29,7 @@ export default function About() {
         ease: 'none',
         scrollTrigger: { trigger: '.about__visual', start: 'top bottom', end: 'bottom top', scrub: true },
       });
-      gsap.from('.about__copy > .eyebrow-label, .about__copy > h2', {
+      gsap.from('.about__copy > .eyebrow, .about__copy > h2', {
         opacity: 0,
         y: 24,
         duration: 0.7,
@@ -33,12 +40,21 @@ export default function About() {
 
       splitLinesReveal('.about__text', { start: 'top 85%' });
       splitLinesReveal('.about__quote', { start: 'top 88%' });
+
+      gsap.from('.about__differentials li', {
+        opacity: 0,
+        y: 14,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.about__differentials', start: 'top 90%' },
+      });
     }, root);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="about section" id="sobre" ref={root}>
+    <section className="about section" id="estudio" ref={root}>
       <div className="wrap about__wrap">
         <div className="about__visual">
           <div className="about__img about__img--back">
@@ -60,22 +76,27 @@ export default function About() {
         </div>
 
         <div className="about__copy">
-          <p className="eyebrow-label">O estúdio</p>
-          <h2>Um ritual, não uma correria.</h2>
+          <p className="eyebrow">O estúdio</p>
+          <h2>Menos vitrine. Mais escuta.</h2>
           <p className="about__text">
             Nascemos da ideia de que um bom atendimento começa muito antes da
-            cadeira: na escuta. Cada visita começa com uma conversa curta
-            sobre rotina, pele e objetivos — e só depois vem a técnica.
+            cadeira. Cada visita abre com uma conversa curta sobre rotina,
+            pele e objetivos — e só depois vem a técnica.
           </p>
           <p className="about__text">
-            Trabalhamos com marcas selecionadas e protocolos revisados por
-            dermatologistas parceiros, em um espaço desenhado para reduzir o
-            ritmo assim que você entra pela porta.
+            Trabalhamos com marcas selecionadas, em um espaço desenhado para
+            reduzir o ritmo assim que você entra pela porta.
           </p>
           <blockquote className="about__quote">
             “Autoestima não se maquia — se constrói, sessão após sessão.”
             <cite>Fundadora do estúdio</cite>
           </blockquote>
+
+          <ul className="about__differentials">
+            {DIFFERENTIALS.map((d) => (
+              <li key={d}>{d}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

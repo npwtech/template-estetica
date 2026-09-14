@@ -1,0 +1,28 @@
+.sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(28, 24, 21, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-inverse);
+  transform: translateY(100%);
+  transition: transform var(--dur-med) var(--ease-signature);
+  display: none;
+}
+
+.sticky-cta--visible {
+  transform: translateY(0);
+}
+
+.sticky-cta .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .sticky-cta { display: block; }
+}

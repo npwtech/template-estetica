@@ -134,9 +134,9 @@ export default function Gallery() {
   }, []);
 
   return (
-    <section className="gallery section" id="galeria" ref={root}>
+    <section className="gallery section" id="historias" ref={root}>
       <div className="wrap gallery__head">
-        <p className="eyebrow-label">Galeria</p>
+        <p className="eyebrow">Por dentro</p>
         <h2>O estúdio, sessão a sessão.</h2>
         <p className="gallery__hint">Role para ver a galeria passar →</p>
       </div>
@@ -150,7 +150,7 @@ export default function Gallery() {
           ))}
           <a className="gallery__end" href="#agendar">
             <span className="gallery__end-mark">Studio Estética</span>
-            <span className="gallery__end-cta">Marque seu horário →</span>
+            <span className="gallery__end-cta">Agendar minha avaliação →</span>
           </a>
         </div>
       </div>
