@@ -21,7 +21,7 @@ function ArrowIcon({ dir }) {
  * Lightbox da galeria. Fica sempre montado (facilita a transição de saída)
  * e é controlado por `index` — `null` fechado, número aberto na foto ali.
  */
-export default function Lightbox({ photos, index, onClose, onNav }) {
+export default function Lightbox({ photos, index, onClose, onNav, onJump }) {
   const isOpen = index !== null && index !== undefined;
   const [displayIndex, setDisplayIndex] = useState(index ?? 0);
   const touchStartX = useRef(null);
@@ -91,10 +91,25 @@ export default function Lightbox({ photos, index, onClose, onNav }) {
 
       <figure className="lightbox__frame" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <img key={displayIndex} src={photo?.src} alt={photo?.alt || ''} />
-        <figcaption>
-          <span>{photo?.alt}</span>
-          <span className="lightbox__count">{displayIndex + 1} / {photos.length}</span>
+        <figcaption key={`cap-${displayIndex}`}>
+          <span className="lightbox__count">{String(displayIndex + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}</span>
+          <p className="lightbox__caption font-display">{photo?.caption || photo?.alt}</p>
         </figcaption>
+
+        <div className="lightbox__dots" role="tablist" aria-label="Ir para foto">
+          {photos.map((p, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`lightbox__dot ${i === displayIndex ? 'lightbox__dot--active' : ''}`}
+              role="tab"
+              aria-selected={i === displayIndex}
+              aria-label={`Foto ${i + 1}`}
+              onClick={() => onJump?.(i)}
+              tabIndex={isOpen ? 0 : -1}
+            />
+          ))}
+        </div>
       </figure>
     </div>
   );

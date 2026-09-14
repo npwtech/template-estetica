@@ -19,66 +19,84 @@ function ExpandIcon() {
   );
 }
 
+function ArrowIcon({ dir }) {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" style={{ transform: dir === 'prev' ? 'scaleX(-1)' : undefined }}>
+      <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 gsap.registerPlugin(ScrollTrigger);
 
 const PHOTOS = [
   {
     src: 'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Aplicação de sérum durante limpeza de pele facial',
+    caption: 'Sérum aplicado com calma, etapa a etapa da limpeza de pele.',
     ratio: '4/5',
     tone: 3,
   },
   {
     src: 'https://images.pexels.com/photos/4586713/pexels-photo-4586713.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Cliente recebendo tratamento facial com dermaroller dourado',
+    caption: 'Microestímulo com dermaroller: um passo do protocolo de renovação facial.',
     ratio: '3/4',
     tone: 1,
   },
   {
     src: 'https://images.pexels.com/photos/3757952/pexels-photo-3757952.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Massagem relaxante nas costas em ambiente de spa',
+    caption: 'Uma massagem que desacelera antes mesmo de tratar.',
     ratio: '4/3',
     tone: 2,
   },
   {
     src: 'https://images.pexels.com/photos/7750144/pexels-photo-7750144.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Estação de atendimento com espelho e iluminação de salão',
+    caption: 'Cada estação pensada pra reduzir o ritmo assim que você senta.',
     ratio: '3/4',
     tone: 3,
   },
   {
     src: 'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Lavagem de cabelo na pia do salão',
+    caption: 'O ritual do cabelo começa na lavagem, não na tesoura.',
     ratio: '4/5',
     tone: 1,
   },
   {
     src: 'https://images.pexels.com/photos/10028673/pexels-photo-10028673.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Profissional finalizando cabelo longo com escova e secador',
+    caption: 'Finalização fio a fio, sem pressa para secar.',
     ratio: '4/3',
     tone: 3,
   },
   {
     src: 'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Sérum facial entre pétalas de rosa',
+    caption: 'Produtos selecionados — sem substituto genérico no protocolo.',
     ratio: '1/1',
     tone: 2,
   },
   {
     src: 'https://images.pexels.com/photos/15507425/pexels-photo-15507425.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Resultado de penteado preso em cabelo loiro cacheado',
+    caption: 'Um penteado que dura o dia inteiro sem pesar.',
     ratio: '3/4',
     tone: 1,
   },
   {
     src: 'https://images.pexels.com/photos/4783335/pexels-photo-4783335.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Aplicação de esmalte vermelho durante manicure',
+    caption: 'Esmaltação em gel: acabamento que não lasca fácil.',
     ratio: '4/3',
     tone: 2,
   },
   {
     src: 'https://images.pexels.com/photos/3865676/pexels-photo-3865676.jpeg?auto=compress&cs=tinysrgb&w=1400',
     alt: 'Óleos essenciais e lavanda para aromaterapia',
+    caption: 'O cuidado começa antes de qualquer procedimento — pelo ambiente.',
     ratio: '4/5',
     tone: 3,
   },
@@ -87,8 +105,9 @@ const PHOTOS = [
 export default function Gallery() {
   const root = useRef(null);
   const viewportRef = useRef(null);
-  const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
   const closeLightbox = () => setActiveIndex(null);
   const navLightbox = (dir) => {
@@ -98,7 +117,24 @@ export default function Gallery() {
     });
   };
 
+  const scrollByCard = (dir) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const card = viewport.querySelector('.gallery__item');
+    const amount = (card ? card.getBoundingClientRect().width : 300) + 24;
+    viewport.scrollBy({ left: dir * amount, behavior: 'smooth' });
+  };
+
   useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const updateEdges = () => {
+      setAtStart(viewport.scrollLeft <= 4);
+      setAtEnd(viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 4);
+    };
+    updateEdges();
+    viewport.addEventListener('scroll', updateEdges, { passive: true });
+    window.addEventListener('resize', updateEdges);
+
     const ctx = gsap.context(() => {
       gsap.from('.gallery__head > *', {
         opacity: 0,
@@ -108,53 +144,24 @@ export default function Gallery() {
         scrollTrigger: { trigger: '.gallery__head', start: 'top 82%' },
       });
 
-      const mm = gsap.matchMedia();
-
-      // desktop: a faixa fica presa na tela e desliza na horizontal
-      // conforme o usuário rola verticalmente — "role e ela passa".
-      mm.add('(min-width: 900px)', () => {
-        const track = trackRef.current;
-        const viewport = viewportRef.current;
-        const getDistance = () => track.scrollWidth - viewport.clientWidth;
-
-        gsap.to(track, {
-          x: () => -getDistance(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: viewport,
-            start: 'top top',
-            end: () => '+=' + getDistance(),
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        gsap.from('.gallery__item, .gallery__end', {
-          opacity: 0,
-          scale: 0.94,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger: 0.06,
-          scrollTrigger: { trigger: viewport, start: 'top 85%' },
-        });
-      });
-
-      // mobile/tablet: sem pin (evita travar o scroll da página) — a
-      // faixa vira uma vitrine que "passa para o lado" com o dedo.
-      mm.add('(max-width: 899px)', () => {
-        gsap.from('.gallery__item, .gallery__end', {
-          opacity: 0,
-          x: 40,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: 0.1,
-          scrollTrigger: { trigger: '.gallery__track', start: 'top 88%' },
-        });
+      // a galeria é uma vitrine horizontal independente — nunca prende o
+      // scroll vertical da página. É só arrastar, usar as setas, ou o
+      // gesto horizontal do trackpad/toque; a página sempre continua.
+      gsap.from('.gallery__item, .gallery__end', {
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.06,
+        scrollTrigger: { trigger: viewport, start: 'top 85%' },
       });
     }, root);
-    return () => ctx.revert();
+
+    return () => {
+      viewport.removeEventListener('scroll', updateEdges);
+      window.removeEventListener('resize', updateEdges);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -162,11 +169,21 @@ export default function Gallery() {
       <div className="wrap gallery__head">
         <p className="eyebrow">Por dentro</p>
         <h2>O estúdio, sessão a sessão.</h2>
-        <p className="gallery__hint">Role para ver a galeria passar — clique numa foto para ampliar</p>
+        <div className="gallery__head-row">
+          <p className="gallery__hint">Arraste para o lado, ou clique numa foto para ampliar com descrição.</p>
+          <div className="gallery__controls">
+            <button type="button" className="gallery__arrow" onClick={() => scrollByCard(-1)} disabled={atStart} aria-label="Fotos anteriores">
+              <ArrowIcon dir="prev" />
+            </button>
+            <button type="button" className="gallery__arrow" onClick={() => scrollByCard(1)} disabled={atEnd} aria-label="Próximas fotos">
+              <ArrowIcon dir="next" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="gallery__viewport" ref={viewportRef}>
-        <div className="gallery__track" ref={trackRef}>
+      <div className={`gallery__viewport ${atStart ? 'gallery__viewport--start' : ''} ${atEnd ? 'gallery__viewport--end' : ''}`} ref={viewportRef}>
+        <div className="gallery__track">
           {PHOTOS.map((p, i) => (
             <button
               type="button"
@@ -186,7 +203,7 @@ export default function Gallery() {
         </div>
       </div>
 
-      <Lightbox photos={PHOTOS} index={activeIndex} onClose={closeLightbox} onNav={navLightbox} />
+      <Lightbox photos={PHOTOS} index={activeIndex} onClose={closeLightbox} onNav={navLightbox} onJump={setActiveIndex} />
     </section>
   );
 }

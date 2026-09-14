@@ -5,6 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s var(--ease-signature), visibility 0s linear 0.4s;
@@ -17,16 +19,17 @@
 }
 
 .lightbox__scrim {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgba(17, 14, 12, 0.9);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  z-index: -1;
+  background: rgba(17, 14, 12, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   cursor: zoom-out;
 }
 
 .lightbox__close {
-  position: absolute;
+  position: fixed;
   top: clamp(1rem, 3vw, 2rem);
   right: clamp(1rem, 3vw, 2rem);
   z-index: 2;
@@ -38,12 +41,15 @@
   border-radius: 50%;
   color: var(--white);
   border: 1px solid var(--border-inverse);
+  background: rgba(17, 14, 12, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   transition: border-color var(--dur-fast) var(--ease-signature), transform var(--dur-fast) var(--ease-signature);
 }
 .lightbox__close:hover { border-color: var(--white); transform: rotate(90deg); }
 
 .lightbox__nav {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -55,19 +61,20 @@
   border-radius: 50%;
   color: var(--white);
   border: 1px solid var(--border-inverse);
+  background: rgba(17, 14, 12, 0.4);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   transition: border-color var(--dur-fast) var(--ease-signature), background var(--dur-fast) var(--ease-signature);
 }
-.lightbox__nav:hover { border-color: var(--white); background: rgba(255, 255, 255, 0.08); }
+.lightbox__nav:hover { border-color: var(--white); background: rgba(255, 255, 255, 0.1); }
 .lightbox__nav--prev { left: clamp(0.75rem, 3vw, 2.5rem); }
 .lightbox__nav--next { right: clamp(0.75rem, 3vw, 2.5rem); }
 
 .lightbox__frame {
   position: relative;
-  margin: 0;
-  max-width: min(1100px, 88vw);
-  max-height: 84vh;
+  margin: auto;
+  width: 100%;
+  max-width: min(880px, 92vw);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,11 +82,14 @@
 
 .lightbox__frame img {
   max-width: 100%;
-  max-height: 78vh;
+  /* altura bem contida — sobra espaço garantido pra legenda abaixo,
+     mesmo em telas baixas (notebook, celular deitado). */
+  max-height: min(58vh, 620px);
   width: auto;
   height: auto;
   object-fit: contain;
   border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-sm);
   animation: lightbox-fade-in 0.5s var(--ease-signature) both;
 }
 
@@ -89,27 +99,67 @@
 }
 
 .lightbox__frame figcaption {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-inverse);
+  width: 100%;
+  max-width: 56ch;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  font-size: var(--fs-xs);
-  color: var(--text-inverse-muted);
-  letter-spacing: 0.02em;
+  gap: 0.6rem;
   text-align: center;
 }
 
 .lightbox__count {
   flex-shrink: 0;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.16em;
   color: var(--accent-on-dark);
 }
 
+.lightbox__caption {
+  font-size: var(--fs-md);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--white);
+  animation: lightbox-fade-in 0.6s var(--ease-signature) both;
+  animation-delay: 0.08s;
+}
+
+.lightbox__dots {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 220px;
+}
+
+.lightbox__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-inverse);
+  transition: background var(--dur-fast) var(--ease-signature), transform var(--dur-fast) var(--ease-signature);
+}
+
+.lightbox__dot--active {
+  background: var(--accent-on-dark);
+  transform: scale(1.6);
+}
+
 @media (max-width: 640px) {
+  .lightbox { padding: 1rem; }
   .lightbox__nav { width: 40px; height: 40px; }
-  .lightbox__frame { max-width: 94vw; }
-  .lightbox__frame figcaption { flex-direction: column; gap: 0.25rem; }
+  .lightbox__nav--prev { left: 0.5rem; }
+  .lightbox__nav--next { right: 0.5rem; }
+  .lightbox__frame img { max-height: 46vh; }
+  .lightbox__caption { font-size: var(--fs-sm); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lightbox__frame img { animation: none; }
+  .lightbox__frame img,
+  .lightbox__caption { animation: none; }
 }

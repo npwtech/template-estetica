@@ -10,6 +10,7 @@ import FAQ from './components/FAQ.jsx';
 import CTA from './components/CTA.jsx';
 import Footer from './components/Footer.jsx';
 import StickyMobileCTA from './components/StickyMobileCTA.jsx';
+import BackToTop from './components/BackToTop.jsx';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
       </main>
       <Footer />
       <StickyMobileCTA />
+      <BackToTop />
     </>
   );
 }

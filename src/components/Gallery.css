@@ -1,35 +1,83 @@
-.gallery {
-  background: var(--bg);
-}
+.gallery { background: var(--bg); }
 
 .gallery__head {
-  max-width: 600px;
-  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  max-width: none;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
   position: relative;
 }
 
 .gallery__head h2 {
   margin-top: 0.9rem;
   font-size: var(--fs-xl);
+  max-width: 600px;
+}
+
+.gallery__head-row {
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .gallery__hint {
-  margin-top: 0.75rem;
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  max-width: 46ch;
 }
 
-.gallery__viewport {
-  overflow: hidden;
+.gallery__controls {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
+
+.gallery__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease-signature), color var(--dur-fast) var(--ease-signature), transform var(--dur-fast) var(--ease-signature);
+}
+.gallery__arrow:hover:not(:disabled) { border-color: var(--accent-strong); color: var(--accent-strong); transform: translateY(-2px); }
+.gallery__arrow:disabled { opacity: 0.3; cursor: default; }
+
+/* --- vitrine horizontal independente: nunca prende o scroll vertical da
+   página. O usuário arrasta, usa as setas, ou o gesto horizontal do
+   trackpad/toque — sempre dá pra continuar descendo a página normalmente. --- */
+.gallery__viewport {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scroll-padding-left: var(--gutter);
+  scroll-padding-right: var(--gutter);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+}
+.gallery__viewport::-webkit-scrollbar { display: none; }
+
+.gallery__viewport--start { -webkit-mask-image: linear-gradient(90deg, #000, #000 calc(100% - var(--gutter)), transparent); mask-image: linear-gradient(90deg, #000, #000 calc(100% - var(--gutter)), transparent); }
+.gallery__viewport--end { -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000); mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000); }
+.gallery__viewport--start.gallery__viewport--end { -webkit-mask-image: none; mask-image: none; }
 
 .gallery__track {
   display: flex;
   align-items: flex-end;
   gap: clamp(1rem, 2vw, 1.5rem);
   width: max-content;
-  padding: 0 var(--gutter);
+  padding-bottom: 0.5rem;
 }
+
+.gallery__track > *:first-child { margin-left: var(--gutter); }
+.gallery__track > *:last-child { margin-right: var(--gutter); }
 
 .gallery__item {
   position: relative;
@@ -41,6 +89,7 @@
   background: none;
   cursor: pointer;
   border-radius: var(--radius-md);
+  scroll-snap-align: start;
 }
 
 .gallery__item .photo-slot {
@@ -101,6 +150,7 @@
   padding: 2rem;
   border-radius: var(--radius-md);
   background: var(--ink);
+  scroll-snap-align: start;
 }
 
 .gallery__end-mark {
@@ -118,23 +168,9 @@
 
 .gallery__end:hover .gallery__end-cta { color: var(--white); }
 
-@media (max-width: 899px) {
-  .gallery__viewport {
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .gallery__viewport::-webkit-scrollbar { display: none; }
-
-  .gallery__item,
-  .gallery__end {
-    scroll-snap-align: start;
-  }
-}
-
-@media (min-width: 900px) {
-  .gallery__hint { display: none; }
+@media (max-width: 760px) {
+  .gallery__head-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .gallery__controls { display: none; }
 }
 
 @media (max-width: 480px) {

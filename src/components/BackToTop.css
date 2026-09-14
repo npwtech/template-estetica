@@ -1,0 +1,51 @@
+.back-to-top {
+  position: fixed;
+  right: clamp(1.25rem, 3vw, 2rem);
+  bottom: clamp(1.5rem, 3vw, 2rem);
+  z-index: 85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  color: var(--white);
+  background: rgba(28, 24, 21, 0.72);
+  border: 1px solid rgba(245, 241, 233, 0.3);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity var(--dur-fast) var(--ease-signature),
+              transform var(--dur-fast) var(--ease-signature),
+              visibility 0s linear var(--dur-fast),
+              border-color var(--dur-fast) var(--ease-signature),
+              background var(--dur-fast) var(--ease-signature);
+}
+
+.back-to-top--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity var(--dur-fast) var(--ease-signature),
+              transform var(--dur-fast) var(--ease-signature),
+              visibility 0s,
+              border-color var(--dur-fast) var(--ease-signature),
+              background var(--dur-fast) var(--ease-signature);
+}
+
+.back-to-top:hover {
+  border-color: var(--accent-on-dark);
+  background: var(--accent-strong);
+}
+
+/* fica acima da barra fixa de agendamento no mobile, nunca sobrepondo */
+@media (max-width: 640px) {
+  .back-to-top {
+    bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    width: 42px;
+    height: 42px;
+  }
+}
