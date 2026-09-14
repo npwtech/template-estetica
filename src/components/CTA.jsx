@@ -31,19 +31,21 @@ export default function CTA() {
         scrollTrigger: { trigger: '.cta__foot', start: 'top 90%' },
       });
 
-      // efeito de texto horizontal (inspirado em demos.gsap.com/demo/horizontal-text) —
-      // a faixa de texto desliza na horizontal conforme a seção passa pela tela.
+      // faixa de texto em looping contínuo — anda sozinha o tempo todo,
+      // não só quando a visitante rola a página.
       const track = root.current.querySelector('.cta__marquee-track');
-      gsap.to(track, {
-        xPercent: -50,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: root.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!reduced) {
+        gsap.to(track, {
+          xPercent: -50,
+          duration: 26,
+          ease: 'none',
+          repeat: -1,
+        });
+      } else {
+        gsap.set(track, { xPercent: -25 });
+      }
     }, root);
     return () => ctx.revert();
   }, []);

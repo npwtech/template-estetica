@@ -27,9 +27,10 @@
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 0.85rem + 1vw, 1.35rem);
   color: var(--white);
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .navbar__right {

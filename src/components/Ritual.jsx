@@ -63,9 +63,11 @@ export default function Ritual() {
         <div className="ritual__row">
           <span className="ritual__track" aria-hidden="true">
             <span className="ritual__progress" />
+            <span className="ritual__flow" />
           </span>
           {STEPS.map((s) => (
             <div className="ritual-step" key={s.n}>
+              <span className="ritual-step__dot" aria-hidden="true" />
               <span className="ritual-step__n font-display">{s.n}</span>
               <h3>{s.title}</h3>
               <p>{s.text}</p>

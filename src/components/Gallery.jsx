@@ -1,8 +1,23 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import PhotoSlot from './PhotoSlot.jsx';
+import Lightbox from './Lightbox.jsx';
 import './Gallery.css';
+
+function ExpandIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+      <path
+        d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,6 +88,15 @@ export default function Gallery() {
   const root = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const closeLightbox = () => setActiveIndex(null);
+  const navLightbox = (dir) => {
+    setActiveIndex((i) => {
+      if (i === null) return i;
+      return (i + dir + PHOTOS.length) % PHOTOS.length;
+    });
+  };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -138,15 +162,22 @@ export default function Gallery() {
       <div className="wrap gallery__head">
         <p className="eyebrow">Por dentro</p>
         <h2>O estúdio, sessão a sessão.</h2>
-        <p className="gallery__hint">Role para ver a galeria passar →</p>
+        <p className="gallery__hint">Role para ver a galeria passar — clique numa foto para ampliar</p>
       </div>
 
       <div className="gallery__viewport" ref={viewportRef}>
         <div className="gallery__track" ref={trackRef}>
           {PHOTOS.map((p, i) => (
-            <div className="gallery__item" key={i}>
+            <button
+              type="button"
+              className="gallery__item"
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              aria-label={`Ampliar foto: ${p.alt}`}
+            >
               <PhotoSlot src={p.src} alt={p.alt} ratio={p.ratio} tone={p.tone} />
-            </div>
+              <span className="gallery__item-badge" aria-hidden="true"><ExpandIcon /></span>
+            </button>
           ))}
           <a className="gallery__end" href="#agendar">
             <span className="gallery__end-mark">Studio Estética</span>
@@ -154,6 +185,8 @@ export default function Gallery() {
           </a>
         </div>
       </div>
+
+      <Lightbox photos={PHOTOS} index={activeIndex} onClose={closeLightbox} onNav={navLightbox} />
     </section>
   );
 }

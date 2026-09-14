@@ -3,28 +3,29 @@ import './StickyMobileCTA.css';
 
 /**
  * Barra de CTA fixa, só no mobile — aparece depois que a visitante passa do
- * hero e some perto da CTA final / rodapé, pra não duplicar o botão à toa.
+ * hero e some a partir da seção de agendamento (CTA final + rodapé, que já
+ * têm seus próprios convites, pra não sobrepor o botão à toa).
  */
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false);
   const [suppressed, setSuppressed] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.7);
+    const target = document.getElementById('agendar');
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      setVisible(y > window.innerHeight * 0.7);
+
+      if (target) {
+        const ctaTop = target.getBoundingClientRect().top + y;
+        setSuppressed(y + window.innerHeight * 0.9 > ctaTop);
+      }
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    const target = document.getElementById('agendar');
-    if (!target || typeof IntersectionObserver === 'undefined') return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => setSuppressed(entry.isIntersecting),
-      { rootMargin: '0px 0px -10% 0px' }
-    );
-    io.observe(target);
-    return () => io.disconnect();
   }, []);
 
   return (

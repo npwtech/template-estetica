@@ -23,6 +23,7 @@
     right: 0;
     height: 1px;
     background: var(--border);
+    overflow: hidden;
   }
   .ritual__progress {
     display: block;
@@ -32,9 +33,60 @@
     transform-origin: left center;
     transform: scaleX(0);
   }
+
+  /* brilho que percorre a linha continuamente, por cima do preenchimento
+     por scroll — a linha nunca fica "parada". */
+  .ritual__flow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent-on-dark), transparent);
+    opacity: 0.85;
+    animation: ritual-flow 5.5s ease-in-out infinite;
+  }
+}
+
+@keyframes ritual-flow {
+  0% { transform: translateX(-30%); }
+  100% { transform: translateX(480%); }
 }
 
 .ritual-step { position: relative; }
+
+/* bolinha pulsante alinhada com a linha, marcando cada etapa */
+.ritual-step__dot {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .ritual-step__dot {
+    display: block;
+    position: absolute;
+    top: -1.79rem;
+    left: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+  }
+  .ritual-step__dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-strong);
+    animation: ritual-pulse 2.6s ease-out infinite;
+  }
+  .ritual-step:first-child .ritual-step__dot { left: 0; }
+}
+
+@keyframes ritual-pulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  75% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
 
 .ritual-step__n {
   display: block;

@@ -23,6 +23,14 @@
   color: var(--white);
 }
 
+/* entre ~981-1320px a coluna de texto divide espaço com a foto — a escala
+   fluida padrão (pensada pra largura total) quebra a frase de forma feia
+   aqui, então a título recebe uma curva própria, mais contida, só nesta
+   faixa. */
+@media (min-width: 981px) and (max-width: 1320px) {
+  .hero__title { font-size: clamp(2.1rem, 1.1rem + 3vw, 3.25rem); }
+}
+
 .hero__title-row { display: block; overflow: hidden; }
 .hero__title-line { display: block; }
 
@@ -196,6 +204,6 @@
 }
 
 @media (max-width: 520px) {
-  .hero__actions { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-  .hero__actions .btn { width: 100%; justify-content: center; }
+  .hero__actions { flex-direction: column; align-items: flex-start; gap: 1.35rem; }
+  .hero__actions .btn-primary { width: 100%; justify-content: center; }
 }
