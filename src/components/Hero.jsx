@@ -11,9 +11,10 @@ export default function Hero() {
   useLayoutEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let removeMouseListeners = () => {};
+    let tl;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 });
+      tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15, paused: true });
 
       tl.set(root.current, { visibility: 'visible' })
         .from(document.querySelector('.navbar'), { yPercent: -100, duration: 0.7, ease: 'power2.out', clearProps: 'transform' }, 0)
@@ -108,7 +109,16 @@ export default function Hero() {
       });
     }, root);
 
+    // a entrada do hero só começa quando o loading de tela cheia (Loader.jsx)
+    // termina de subir; o fallback evita que o hero fique preso caso esse
+    // evento nunca chegue.
+    const playHero = () => tl.play();
+    window.addEventListener('app:loaded', playHero, { once: true });
+    const fallback = setTimeout(playHero, 4000);
+
     return () => {
+      window.removeEventListener('app:loaded', playHero);
+      clearTimeout(fallback);
       removeMouseListeners();
       ctx.revert();
     };
